@@ -1,18 +1,16 @@
+import React, { useRef, useState } from 'react';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { OPEN_WEATHER_MAP_API_KEY } from '../../api';
 import { setWeatherData } from '../../store/slices/weatherData';
 import { RootState } from '../../store/store';
-import {
-    getCurrentWeatherData,
-    fetchCurrentWeatherData,
-} from '../../utils/fetching/fetchCurrentWeatherData';
+import { fetchCurrentWeatherData } from '../../utils/fetching/fetchCurrentWeatherData';
 import { fetchForecastedWeatherData } from '../../utils/fetching/fetchForcastedWeatherData';
+import { toUpperCase } from '../../utils/helpers/toUpperCase';
 
 export const SearchBar = () => {
     const router = useRouter();
+    const searchbarRef = useRef<HTMLInputElement>(null);
     const weatherData = useSelector(
         (state: RootState) => state.weatherData.weatherData
     );
@@ -31,13 +29,21 @@ export const SearchBar = () => {
 
                 if (json.cod === 200) {
                     dispatch(setWeatherData(json));
+
+                    setSearch(() => toUpperCase(search));
+
+                    searchbarRef.current?.blur();
                 }
             } else if (router.pathname === '/forecast') {
                 const res = await fetchForecastedWeatherData(search);
                 const json = await res.json();
 
-                if (json.cod === 200) {
+                if (json.cod === '200') {
                     dispatch(setWeatherData(json));
+
+                    setSearch(() => toUpperCase(search));
+
+                    searchbarRef.current?.blur();
                 }
             }
         }
@@ -46,6 +52,7 @@ export const SearchBar = () => {
     return (
         <form onSubmit={fetchWeather}>
             <input
+                ref={searchbarRef}
                 type="text"
                 className={cn(
                     'block',
