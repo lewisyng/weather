@@ -21,7 +21,7 @@ export const WeatherData = ({
             setTempInC(kelvinToCelsius(temp));
         }
         if (speed) {
-            setWindSpeed(speed * 3.6);
+            setWindSpeed(Number((speed * 3.6).toFixed(2)));
         }
     }, [temp, speed]);
 
