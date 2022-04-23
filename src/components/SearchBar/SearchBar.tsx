@@ -29,42 +29,51 @@ export const SearchBar = () => {
     };
 
     return (
-        <form className="m-4 flex" onSubmit={fetchWeather}>
+        <form onSubmit={fetchWeather}>
             <input
+                type="text"
                 className={cn(
-                    'rounded-l-lg',
-                    'p-4',
-                    'border-t',
-                    'mr-0',
+                    'block',
+                    'w-full',
+                    'text-center',
+                    'py-4',
+                    'focus:placeholder-transparent',
+                    'text-5xl',
+                    'leading-5',
+                    'font-bold',
+                    'text-gray-700',
+                    'bg-white',
+                    'bg-clip-padding',
                     'border-b',
-                    'border-l',
-                    'text-gray-800',
-                    'border-gray-200',
-                    'bg-white'
+                    'border-solid',
+                    'transition',
+                    'ease-in-out',
+                    'focus:text-gray-700',
+                    'focus:bg-white',
+                    'focus:border-blue-600',
+                    'focus:outline-none'
                 )}
                 placeholder="Search for a location..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
 
-            <button
+            {/* <button
                 type="submit"
                 className={cn(
-                    'px-8',
                     'rounded-r-lg',
-                    'bg-yellow-400',
-                    'text-gray-800',
+                    'text-gray-700',
                     'font-bold',
-                    'p-4',
-                    'uppercase',
-                    'border-yellow-500',
+                    'p-2',
+                    'border-r',
                     'border-t',
                     'border-b',
-                    'border-r'
+                    'border-solid',
+                    'border-gray-300',
                 )}
             >
                 Search
-            </button>
+            </button> */}
         </form>
     );
 };
