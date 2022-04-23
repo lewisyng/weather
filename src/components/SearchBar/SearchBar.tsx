@@ -1,11 +1,18 @@
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiKey } from '../../api';
+import { OPEN_WEATHER_MAP_API_KEY } from '../../api';
 import { setWeatherData } from '../../store/slices/weatherData';
 import { RootState } from '../../store/store';
+import {
+    getCurrentWeatherData,
+    fetchCurrentWeatherData,
+} from '../../utils/fetching/fetchCurrentWeatherData';
+import { fetchForecastedWeatherData } from '../../utils/fetching/fetchForcastedWeatherData';
 
 export const SearchBar = () => {
+    const router = useRouter();
     const weatherData = useSelector(
         (state: RootState) => state.weatherData.weatherData
     );
@@ -18,12 +25,20 @@ export const SearchBar = () => {
         e.preventDefault();
 
         if (search !== '') {
-            const res = await fetch(
-                `https://cors-everywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${apiKey}`
-            );
-            const json = await res.json();
-            if (json.cod === 200) {
-                dispatch(setWeatherData(json));
+            if (router.pathname === '/') {
+                const res = await fetchCurrentWeatherData(search);
+                const json = await res.json();
+
+                if (json.cod === 200) {
+                    dispatch(setWeatherData(json));
+                }
+            } else if (router.pathname === '/forecast') {
+                const res = await fetchForecastedWeatherData(search);
+                const json = await res.json();
+
+                if (json.cod === 200) {
+                    dispatch(setWeatherData(json));
+                }
             }
         }
     };
