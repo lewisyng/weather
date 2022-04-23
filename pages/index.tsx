@@ -7,6 +7,7 @@ import WeatherData from '../src/components/WeatherData/WeatherData';
 import { SearchBar } from '../src/components/SearchBar/SearchBar';
 import { useSelector } from 'react-redux';
 import { RootState } from '../src/store/store';
+import SearchedLocation from '../src/components/SearchedLocation/SearchedLocation';
 
 const Home: NextPage = () => {
     // const cityToLonLat = async () => {};
@@ -46,17 +47,11 @@ const Home: NextPage = () => {
             <PageWrapper>
                 <Header />
 
-                <div className="flex justify-center">
-                    <SearchBar />
-                </div>
+                <SearchBar />
 
-                {weatherData?.name && (
-                    <p className="text-center border-b pb-5 mt-5 text-6xl font-bold text-black dark:text-white ml-2">
-                        {weatherData.name}
-                    </p>
-                )}
+                <SearchedLocation />
 
-                {weatherData && <WeatherData weatherData={weatherData} />}
+                <WeatherData />
             </PageWrapper>
         </div>
     );
