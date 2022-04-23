@@ -46,11 +46,8 @@ const Home: NextPage = () => {
 
             <PageWrapper>
                 <Header />
-
                 <SearchBar />
-
                 <SearchedLocation />
-
                 <WeatherData />
             </PageWrapper>
         </div>
