@@ -10,8 +10,8 @@ export const SearchedLocation = () => {
     return (
         <div>
             <div className="flex justify-center gap-5 pt-5">
-                {weatherData?.coord?.lat && <p className="font-bold">Lat: {(weatherData as WeatherDataType).coord.lat}</p>}
-                {weatherData?.coord?.lon && <p className="font-bold">Lon: {(weatherData as WeatherDataType).coord.lon}</p>}
+                {(weatherData as WeatherDataType)?.coord?.lat && <p className="font-bold">Lat: {(weatherData as WeatherDataType).coord.lat}</p>}
+                {(weatherData as WeatherDataType)?.coord?.lon && <p className="font-bold">Lon: {(weatherData as WeatherDataType).coord.lon}</p>}
             </div>
         </div>
     );
