@@ -22,30 +22,26 @@ export const SearchBar = () => {
     const fetchWeather = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (search !== '') {
-            if (router.pathname === '/') {
-                const res = await fetchCurrentWeatherData(search);
-                const json = await res.json();
+        if (search === '') return;
 
-                if (json.cod === 200) {
-                    dispatch(setWeatherData(json));
+        if (router.pathname === '/') {
+            const res = await fetchCurrentWeatherData(search);
+            const json = await res.json();
 
-                    setSearch(() => toUpperCase(search));
+            if (json.cod !== 200) return;
 
-                    searchbarRef.current?.blur();
-                }
-            } else if (router.pathname === '/forecast') {
-                const res = await fetchForecastedWeatherData(search);
-                const json = await res.json();
+            dispatch(setWeatherData(json));
+            setSearch(() => toUpperCase(search));
+            searchbarRef.current?.blur();
+        } else if (router.pathname === '/forecast') {
+            const res = await fetchForecastedWeatherData(search);
+            const json = await res.json();
 
-                if (json.cod === '200') {
-                    dispatch(setWeatherData(json));
-
-                    setSearch(() => toUpperCase(search));
-
-                    searchbarRef.current?.blur();
-                }
-            }
+            if (json.cod !== '200') return;
+         
+            dispatch(setWeatherData(json));
+            setSearch(() => toUpperCase(search));
+            searchbarRef.current?.blur();
         }
     };
 
