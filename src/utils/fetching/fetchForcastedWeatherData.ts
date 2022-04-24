@@ -1,5 +1,3 @@
-import { OPEN_WEATHER_MAP_API_KEY } from '../../api';
-
 /**
  * Forecast Api uses coordinates to fetch weather data for given location
  * Therefore we need to transform location to coordinates
@@ -10,7 +8,7 @@ import { OPEN_WEATHER_MAP_API_KEY } from '../../api';
 
 const getCoordsForLocation = async (location: string) => {
     const temp: any = await fetch(
-        `https://cors-everywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${OPEN_WEATHER_MAP_API_KEY}`
+        `https://cors-everywhere.herokuapp.com/http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`
     );
 
     const json = await temp.json();
@@ -31,7 +29,7 @@ export const fetchForecastedWeatherData = async (location: string) => {
     const { lon, lat } = await getCoordsForLocation(location);
 
     const res = await fetch(
-        `https://cors-everywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_MAP_API_KEY}`
+        `https://cors-everywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`
     );
 
     return res;
